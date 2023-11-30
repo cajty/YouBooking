@@ -1,0 +1,1 @@
+SQUAD : creation UML; diagrammes : cas d'utilisation/classe et sequence 
