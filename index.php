@@ -92,7 +92,8 @@
         .header .contenr ul {
             display: none;
         }
-        .hero_section .contenr p{
+
+        .hero_section .contenr p {
             font-size: 18px;
         }
     }
@@ -118,11 +119,13 @@
         overflow: hidden;
         margin-bottom: 50px;
     }
+
     @media (max-width: 768px) {
         .header .contenr ul {
             display: none;
         }
-        .hero_section .contenr p{
+
+        .hero_section .contenr p {
             font-size: 18px;
         }
     }
@@ -146,21 +149,24 @@
         color: gray;
         font-weight: bold;
     }
+
     @media (max-width: 768px) {
         .header .contenr ul {
             display: none;
         }
 
-        
-        .hero_section .contenr p{
+
+        .hero_section .contenr p {
             font-size: 18px;
         }
-        main .contenr .about .about_info p{
+
+        main .contenr .about .about_info p {
             font-size: 16px;
         }
-       main .contenr .about .about_info h3{
-        font-size: 20px;
-       }
+
+        main .contenr .about .about_info h3 {
+            font-size: 20px;
+        }
     }
 
     main .contenr .about .about_image {
@@ -212,12 +218,14 @@
         letter-spacing: 1px;
         font-family: Arial, Helvetica, sans-serif;
     }
+
     @media (max-width: 768px) {
         main .mini_hero p {
-        font-size: 18px;
-        text-align: center;
+            font-size: 18px;
+            text-align: center;
+        }
     }
-    }
+
     main .contenr .hotels {
         padding: 40px 0;
         width: 100%;
@@ -295,7 +303,29 @@
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 30px;
     }
-
+    .filter{
+        height: 20vh;
+        
+        margin: 20px 0;
+        background-color: rgb(245, 245, 245);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 8px;
+        padding: 10px;
+    }
+    .filter select{
+        background-color: #b47f2f;
+        color:#fff;
+        padding: 10px 40px;
+        cursor: pointer;
+        font-size: 22px;
+        outline: none;
+        border: none;
+    }
+    .fil{
+        line-height: 5;
+    }
     footer {
         background-color: #b47f2f;
         color: #fff;
@@ -344,6 +374,26 @@
             <div class="mini_hero">
                 <h3>Notre hoteles</h3>
                 <p>Bienvenue dans les hôtels les plus raffinés YouBooking</p>
+            </div>
+            <div class="filter">
+                <div class="filter_pays fil">
+                    <h4>Filtershing pour pays</h4>
+                    <select name="select" id="vill">
+                        <option value="maroc">maroc</option>
+                        <option value="france">france</option>
+                        <option value="USE">USE</option>
+                        <option value="UAE">UAE</option>
+                    </select>
+                </div>
+                <div class="filter_vill fil">
+                    <h4>Filtershing pour villes</h4>
+                    <select name="select" id="vill">
+                        <option value="casa">casa</option>
+                        <option value="agadir">agadir</option>
+                        <option value="USE">USE</option>
+                        <option value="UAE">UAE</option>
+                    </select>
+                </div>
             </div>
             <div class="hotels">
                 <div class="cart">
