@@ -34,61 +34,64 @@ function login()
     $email = trim($_POST['Email']);
     $pass = trim($_POST['password']);
 
-    $query = " SELECT * FROM `utilisateurs` WHERE Email = ?";
+    $requite = " SELECT * FROM `utilisateurs` WHERE Email = '$email' ";
 
-    $stmt = mysqli_prepare($con, $query);
-    if (!$stmt){echo "Erreur de préparation de la requête: " . mysqli_error($con);}
-    else if ($stmt) {
-        mysqli_stmt_bind_param($stmt,"s", $email);
-        mysqli_stmt_execute($stmt);
-        $result = mysqli_stmt_get_result($stmt);
-        if (!$result) {
-            echo "Erreur d'exécution de la requête: " . mysqli_error($con);
+    $query = mysqli_query($con, $requite);
+    if (mysqli_num_rows($query) > 0) {
+        $rows = mysqli_fetch_assoc($query);
+        $passafterfetch = $rows['Mot_de_passe'];
+        
+        echo $passafterfetch;
+        
+
+        if (password_verify($pass, $passafterfetch)) {
+            $role = $row["typeUser_id"];
+            $id = $row["ID"];
+            if ($role == 1) {
+                $_SESSION["typeUser_id"] = 'admin';
+                $_SESSION['ID'] = $id;
+                header('location:./index.php');
+                exit;
+            } else if ($role == 2) {
+                $_SESSION["typeUser_id"] = 'client';
+                $_SESSION['ID'] = $id;
+                header('location:./index.php');
+                exit;
+            } else if ($role == 3) {
+                $_SESSION["typeUser_id"] = 'service client';
+                $_SESSION['ID'] = $id;
+                header('location:./index.php');
+                exit;
+            } else if ($role == 4) {
+                $_SESSION["typeUser_id"] = 'proprietaire de hotel';
+                $_SESSION['ID'] = $id;
+                header('location:./index.php');
+                exit;
+            }
+
+        } else {
+            var_dump(password_verify($pass, $passafterfetch));
+            echo "mot de passe ou username incorrect  ";
         }
-        else if ($result) {
-             $row = mysqli_fetch_assoc($result);
-            if ($row) {
-               
-            // $passfromform = $pass; // Sauvegarde du mot de passe saisi
-            $passafterfetch = $row["Mot_de_passe"];
-            // $pass = password_hash($pass, PASSWORD_DEFAULT);
-            // $passfromform=$pass;
-           
-            // // Output pour vérification
-            // echo "Mot de passe saisi: $pass <br>";
-            // echo "Mot de passe depuis la base de données: $passafterfetch <br>";
 
-            if (password_verify($pass, $passafterfetch)) {
-                $role = $row["typeUser_id"];
-                $id = $row["ID"];
-                if ($role == 1) {
-                    $_SESSION["typeUser_id"] = 'admin';
-                    $_SESSION['ID'] = $id;
-                    header('location:./index.php');
-                    exit;
-                } else if ($role == 2) {
-                    $_SESSION["typeUser_id"] = 'client';
-                    $_SESSION['ID'] = $id;
-                    header('location:./index.php');
-                    exit;
-                } else if ($role == 3) {
-                    $_SESSION["typeUser_id"] = 'service client';
-                    $_SESSION['ID'] = $id;
-                    header('location:./index.php');
-                    exit;
-                } else if ($role == 4) {
-                    $_SESSION["typeUser_id"] = 'proprietaire de hotel';
-                    $_SESSION['ID'] = $id;
-                    header('location:./index.php');
-                    exit;
-                }
 
-            } else {var_dump(password_verify($pass, $passafterfetch)) ;
-                echo "mot de passe incorrect  "; }
-        }else echo "email not found";
-        }
+
+
+    } else {
+        echo "user not found go to register ...";
+        echo "<a href='./register.php'>Go to register</a>";
     }
+
+
 }
+
+
+
+
+
+
+
+
 
 
 
