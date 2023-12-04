@@ -5,9 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register Page</title>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <style>
-    /* Your custom CSS here */
-  </style>
+  <link rel="stylesheet" href="./style.css">
+  
 </head>
 <body style="height: 100vh;">
 
@@ -16,7 +15,7 @@
       <div class="row h-50">
         <div class="col-lg-6 mx-auto  p-4 rounded shadow" style="backdrop-filter: blur(19px); border-radius:16px">
           <h2 class="mb-4 mt-4 text-center font-weight-bold text-white bg-primary" style="border-radius:16px">Create an account</h2>
-          <form action="register.php" method="post">
+          <form action="./testscript.php" enctype="multipart/form-data" method="post">
             <div class="form-group font-weight-bold text-balck ">
               <label for="Firstname">First Name</label>
               <input type="text" name="Prenom" id="Firstname" class="form-control" placeholder="Mohamed" required >
@@ -36,10 +35,9 @@
             <div class="form-group font-weight-bold text-balck">
               <label for="password">Password</label>
               <input type="password" name="Mot_de_passe" id="password" class="form-control" placeholder="••••••••" required>
-            </div>
             <div class="form-group font-weight-bold text-balck">
-              <label for="confirm_password">Confirm Password</label>
-              <input type="password" name="confirm_Mot_de_passe" id="confirm_password" class="form-control" placeholder="••••••••" required>
+              <label for="image">Profile Picture</label>
+              <input type="file" name="image" id="image" class="form-control">
             </div>
             <div class="form-group font-weight-bold text-balck">
               <label for="account_type">Account Type</label>
@@ -47,6 +45,10 @@
                 <option value="2">Client</option>
                 <option value="4">Hotel Owner</option>
               </select>
+            </div>
+            <div class="form-group font-weight-bold text-balck">
+              <label for="infos">more infos</label>
+              <input type="text" name="Autres_informations" id="infos" class="form-control" placeholder="more infos suplementaire..">
             </div>
             <button name="register" type="submit" class="btn btn-primary btn-block">Create Account</button>
             <div class="mt-3 text-center">
