@@ -1,4 +1,6 @@
-
+<?php
+include("./Config/cnx.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
