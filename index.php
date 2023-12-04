@@ -1,5 +1,5 @@
 <?php
-include("./conexion/conxion.php");
+include("./Config/cnx.php");
 ?>
 
 <!DOCTYPE html>
