@@ -1,4 +1,8 @@
+<<<<<<< HEAD
+<?php
+=======
 g<?php
+>>>>>>> F-Home
 header('Content-Type: text/html; charset=utf-8');
 session_start();
 if (isset($_POST['register'])) {
