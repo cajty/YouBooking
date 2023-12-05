@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="dashboard.css">
-</head>c:\xampp\htdocs\problem_solving\offre.jpg c:\xampp\htdocs\problem_solving\client.jpg
+</head>
 
 <body>
     <div class="container">
@@ -34,7 +34,7 @@
                         <span class="icon">
                             <ion-icon name="people-outline"></ion-icon>
                         </span>
-                        <span class="title">Profile</span>
+                        <span class="title">profile</span>
                     </a>
                 </li>
 
@@ -81,7 +81,7 @@
             </div>
 
 
-            <h1>Hey Maryem</h1>
+            <h1>Hey Maryem </h1>
             <h2>Welcome back!</h2>
 
             <div class="best-offer-section">
