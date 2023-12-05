@@ -1,5 +1,8 @@
 <?php
 include("./Config/cnx.php");
+session_start();
+$_SESSION["pays"] = null;
+$_SESSION["vill"] = null;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -323,16 +326,36 @@ include("./Config/cnx.php");
         line-height: 5;
     }
 
-    button {
+    .buuton {
         color: #fff;
         background-color: #b47f2f;
+        padding: 5px 20px;
+        font-size: 18px;
+        cursor: pointer;
+        border-radius: 8px;
     }
 
-
+    /* #bi{
+        display: none;
+    } */
     footer {
         background-color: #b47f2f;
         color: #fff;
         display: flex;
+    }
+
+    .fltres {
+        /* display: none; */
+        background-color: rgb(245, 245, 245);
+        padding: 30px 0;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+    #fltres{
+        display: none;
+    }
+    #vill{
+        display: none;
     }
 </style>
 
@@ -379,80 +402,58 @@ include("./Config/cnx.php");
                 <p>Bienvenue dans les hôtels les plus raffinés YouBooking</p>
             </div>
             <div class="filter">
-                <button id="pays">Filtershing pour pays</button>
-                <button id="city">Filtershing pour villes</button>
+                <button id="pays" class="btn">Filtershing pour pays</button>
+                <button id="city" class="btn">Filtershing pour villes</button>
             </div>
-            <form action="">
-                <div class="filter">
-                    <div class="filter_pays fil">
-                        <h4>Filtershing pour pays</h4>
-                        <?php
-                        $sql = "SELECT DISTINCT `Pays`  FROM `localisation_hotels` WHERE 1";
-                        $result = mysqli_query($con, $sql);
-                        // echo "<pre>";
-                        // print_r( mysqli_fetch_assoc($result));
-                        // echo "</pre>";
-                        echo "<select name='pays' >";
-                        if (mysqli_num_rows($result) > 0) {
-                            // output data of each row
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                echo "
-                                  <option value=$row[Pays]>$row[Pays]</option>    
+
+            <form action="" method="POST">
+                <div class="fltres" id="fltres">
+                    <?php
+                    $sql = "SELECT DISTINCT `Pays`  FROM `localisation_hotels` WHERE 1";
+                    $result = mysqli_query($con, $sql);
+                    // echo "<pre>";
+                    // print_r( mysqli_fetch_assoc($result));
+                    // echo "</pre>";
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "
+                                  <input type='submit' name='az' class='buuton' value=$row[Pays]>    
                                 ";
-                            }
                         }
-                        echo " </select>";
+                    }
 
-                        ?>
-                        <!-- <select name="select" id="vill">
-                            <option value="maroc">maroc</option>
-                            <option value="france">france</option>
-                            <option value="USE">USE</option>
-                            <option value="UAE">UAE</option>
-                        </select> -->
-                    </div>
-                    <div class="filter_vill fil">
 
-                        <h4>Filtershing pour villes</h4>
-                        <?php
-                        $sql = "SELECT DISTINCT `Ville`  FROM `localisation_hotels` WHERE 1";
-                        $result = mysqli_query($con, $sql);
-                        // echo "<pre>";
-                        // print_r( mysqli_fetch_assoc($result));
-                        // echo "</pre>";
-                        echo "<select name='ville' >";
-                        if (mysqli_num_rows($result) > 0) {
-                            // output data of each row
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $villes = $row['Ville'];
-                                echo "
-                                  <option value=$row[Ville]>$row[Ville]</option>    
+                    if (isset($_POST["az"])) {
+                        echo $_POST["az"];
+                        $_SESSION["pays"] = $_POST["az"];
+                    }
+
+                    ?>
+                </div>
+                <div class="fltres" id="vill">
+                    <?php
+                    $sql = "SELECT DISTINCT `Ville`  FROM `localisation_hotels` WHERE 1";
+                    $result = mysqli_query($con, $sql);
+                    // echo "<pre>";
+                    // print_r( mysqli_fetch_assoc($result));
+                    // echo "</pre>";
+                    if (mysqli_num_rows($result) > 0) {
+                        // output data of each row
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "
+                                  <input type='submit' name='vill' class='buuton' value=$row[Ville]>    
                                 ";
-                            }
                         }
-                        echo " </select>";
+                    }
 
-                        if (isset($_POST["ville"])) {
-                            // $selectedVille = $_POST["ville"];
-                        
-                            // // استخدام القيم المحددة في استعلام SELECT
-                            // $sql = "SELECT * FROM `localisation_hotels` WHERE `Ville`='$selectedVille' AND `Filter`='$selectedFilter'";
-                            // $result = mysqli_query($con, $sql);
-                            echo "bilal";
-
-                            // عرض النتائج
-                            // if (mysqli_num_rows($result) > 0) {
-                            //     while ($row = mysqli_fetch_assoc($result)) {
-                            //         echo "Hotel Name: " . $row["hotel_name"] . "<br>";
-                            //         // قم بعرض المزيد من الحقول حسب الحاجة
-                            //     }
-                        } else {
-                            echo "لا توجد نتائج.";
-                        }
+                    if (isset($_POST["vill"])) {
+                        echo $_POST["vill"];
+                        $_SESSION["vill"] = $_POST["vill"];
+                    }
 
 
-                        ?>
-                    </div>
+                    ?>
                 </div>
             </form>
 
@@ -460,16 +461,16 @@ include("./Config/cnx.php");
 
             <div class="hotels">
                 <?php
-                $sql = "SELECT * FROM hotels 
-                INNER JOIN localisation_hotels ON hotels.Localisation = localisation_hotels.ID ";
-                $result = mysqli_query($con, $sql);
-                // echo "<pre>";
-                // print_r( mysqli_fetch_assoc($result));
-                // echo "</pre>";
-                if (mysqli_num_rows($result) > 0) {
-                    // output data of each row
-                    while ($row = mysqli_fetch_assoc($result)) {
-                        echo "
+                $er = $_SESSION["pays"];
+                $vil = $_SESSION["vill"];
+                if ($_SESSION["pays"] !== null) {
+                    $sql = "SELECT * FROM localisation_hotels
+                INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id WHERE localisation_hotels.Pays =  '$er'";
+                    $result = mysqli_query($con, $sql);
+                    if (mysqli_num_rows($result) > 0) {
+                        
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "
                         <div class='cart'>
                     <div class='imageHotel'>
                         <img src='./imag/hero.jpg' alt='image'>
@@ -483,27 +484,67 @@ include("./Config/cnx.php");
                 </div>
                         
                         ";
+                            $_SESSION["vill"] = null;
+                        }
+                    } else {
+                        echo "0 results";
+                    }
+                } else if ($_SESSION["vill"] !== null) {
+                    $sql = "SELECT * FROM localisation_hotels
+                    INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id WHERE localisation_hotels.Ville =  '$vil'";
+                    $result = mysqli_query($con, $sql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+                       
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "
+                            <div class='cart'>
+                        <div class='imageHotel'>
+                            <img src='./imag/hero.jpg' alt='image'>
+                        </div>
+                        <div class='info'>
+                            <p class='name'>$row[Nom_hotel]</p>
+                            <p>Countery <span>$row[Pays]</span> </p>
+                            <p>City <span>$row[Ville]</span> </p>
+                            <a>Show more</a>
+                        </div>
+                    </div>
+                            
+                            ";
+                            $_SESSION["pays"] = null;
+                        }
                     }
                 } else {
-                    echo "0 results";
-                }
-
-                mysqli_close($con);
-                ?>
-
-
-                <!-- <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
+                    $sql = "SELECT * FROM localisation_hotels
+                INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id";
+                    $result = mysqli_query($con, $sql);
+                    
+                    if (mysqli_num_rows($result) > 0) {
+                        
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            echo "
+                        <div class='cart'>
+                    <div class='imageHotel'>
+                        <img src='./imag/hero.jpg' alt='image'>
                     </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
+                    <div class='info'>
+                        <p class='name'>$row[Nom_hotel]</p>
+                        <p>Countery <span>$row[Pays]</span> </p>
+                        <p>City <span>$row[Ville]</span> </p>
                         <a>Show more</a>
                     </div>
-                </div> -->
+                </div>
+                        
+                        ";
+                        }
+                    } else {
+                        echo "0 results";
+                    }
+
+                    mysqli_close($con);
+                }
+
+                ?>
             </div>
             <div class="mini_her">
                 <h3>Notre Chambre</h3>
@@ -548,6 +589,25 @@ include("./Config/cnx.php");
             </div>
         </div>
     </footer>
+
+    <script>
+        let pays = document.getElementById("fltres");
+        let vill = document.getElementById("vill");
+        let pp = document.getElementById("pp");
+        let btn = document.querySelectorAll(".filter .btn");
+        console.log(pays);
+        console.log(vill);
+            btn[0].addEventListener("click" , ()=>{
+                fltres.style.display = "flex"
+            })
+        btn[1].addEventListener("click" , ()=>{
+                vill.style.display = "flex"
+            })
+
+        pays.addEventListener("click", () => {
+            fltres.style.display = "flex"
+        })
+    </script>
 </body>
 
 </html>
