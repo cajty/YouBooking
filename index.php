@@ -3,6 +3,7 @@ include("./Config/cnx.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -59,16 +60,6 @@ include("./Config/cnx.php");
 
     }
 
-    /* .hero_section::before{
-        content: " ";
-        position: absolute;
-        left: 0;
-        top: 0;
-        height: 100%;
-        width: 100%;
-        background-color: rgba(97, 97, 97, 0.6);
-        z-index: 1;
-    } */
     .hero_section .contenr {
         display: flex;
         align-items: center;
@@ -305,9 +296,10 @@ include("./Config/cnx.php");
         grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
         gap: 30px;
     }
-    .filter{
+
+    .filter {
         height: 20vh;
-        
+
         margin: 20px 0;
         background-color: rgb(245, 245, 245);
         display: flex;
@@ -316,18 +308,27 @@ include("./Config/cnx.php");
         border-radius: 8px;
         padding: 10px;
     }
-    .filter select{
+
+    .filter select {
         background-color: #b47f2f;
-        color:#fff;
+        color: #fff;
         padding: 10px 40px;
         cursor: pointer;
         font-size: 22px;
         outline: none;
         border: none;
     }
-    .fil{
+
+    .fil {
         line-height: 5;
     }
+
+    button {
+        color: #fff;
+        background-color: #b47f2f;
+    }
+
+
     footer {
         background-color: #b47f2f;
         color: #fff;
@@ -378,27 +379,120 @@ include("./Config/cnx.php");
                 <p>Bienvenue dans les hôtels les plus raffinés YouBooking</p>
             </div>
             <div class="filter">
-                <div class="filter_pays fil">
-                    <h4>Filtershing pour pays</h4>
-                    <select name="select" id="vill">
-                        <option value="maroc">maroc</option>
-                        <option value="france">france</option>
-                        <option value="USE">USE</option>
-                        <option value="UAE">UAE</option>
-                    </select>
-                </div>
-                <div class="filter_vill fil">
-                    <h4>Filtershing pour villes</h4>
-                    <select name="select" id="vill">
-                        <option value="casa">casa</option>
-                        <option value="agadir">agadir</option>
-                        <option value="USE">USE</option>
-                        <option value="UAE">UAE</option>
-                    </select>
-                </div>
+                <button id="pays">Filtershing pour pays</button>
+                <button id="city">Filtershing pour villes</button>
             </div>
+            <form action="">
+                <div class="filter">
+                    <div class="filter_pays fil">
+                        <h4>Filtershing pour pays</h4>
+                        <?php
+                        $sql = "SELECT DISTINCT `Pays`  FROM `localisation_hotels` WHERE 1";
+                        $result = mysqli_query($con, $sql);
+                        // echo "<pre>";
+                        // print_r( mysqli_fetch_assoc($result));
+                        // echo "</pre>";
+                        echo "<select name='pays' >";
+                        if (mysqli_num_rows($result) > 0) {
+                            // output data of each row
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                echo "
+                                  <option value=$row[Pays]>$row[Pays]</option>    
+                                ";
+                            }
+                        }
+                        echo " </select>";
+
+                        ?>
+                        <!-- <select name="select" id="vill">
+                            <option value="maroc">maroc</option>
+                            <option value="france">france</option>
+                            <option value="USE">USE</option>
+                            <option value="UAE">UAE</option>
+                        </select> -->
+                    </div>
+                    <div class="filter_vill fil">
+
+                        <h4>Filtershing pour villes</h4>
+                        <?php
+                        $sql = "SELECT DISTINCT `Ville`  FROM `localisation_hotels` WHERE 1";
+                        $result = mysqli_query($con, $sql);
+                        // echo "<pre>";
+                        // print_r( mysqli_fetch_assoc($result));
+                        // echo "</pre>";
+                        echo "<select name='ville' >";
+                        if (mysqli_num_rows($result) > 0) {
+                            // output data of each row
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $villes = $row['Ville'];
+                                echo "
+                                  <option value=$row[Ville]>$row[Ville]</option>    
+                                ";
+                            }
+                        }
+                        echo " </select>";
+
+                        if (isset($_POST["ville"])) {
+                            // $selectedVille = $_POST["ville"];
+                        
+                            // // استخدام القيم المحددة في استعلام SELECT
+                            // $sql = "SELECT * FROM `localisation_hotels` WHERE `Ville`='$selectedVille' AND `Filter`='$selectedFilter'";
+                            // $result = mysqli_query($con, $sql);
+                            echo "bilal";
+
+                            // عرض النتائج
+                            // if (mysqli_num_rows($result) > 0) {
+                            //     while ($row = mysqli_fetch_assoc($result)) {
+                            //         echo "Hotel Name: " . $row["hotel_name"] . "<br>";
+                            //         // قم بعرض المزيد من الحقول حسب الحاجة
+                            //     }
+                        } else {
+                            echo "لا توجد نتائج.";
+                        }
+
+
+                        ?>
+                    </div>
+                </div>
+            </form>
+
+
+
             <div class="hotels">
-                <div class="cart">
+                <?php
+                $sql = "SELECT * FROM hotels 
+                INNER JOIN localisation_hotels ON hotels.Localisation = localisation_hotels.ID ";
+                $result = mysqli_query($con, $sql);
+                // echo "<pre>";
+                // print_r( mysqli_fetch_assoc($result));
+                // echo "</pre>";
+                if (mysqli_num_rows($result) > 0) {
+                    // output data of each row
+                    while ($row = mysqli_fetch_assoc($result)) {
+                        echo "
+                        <div class='cart'>
+                    <div class='imageHotel'>
+                        <img src='./imag/hero.jpg' alt='image'>
+                    </div>
+                    <div class='info'>
+                        <p class='name'>$row[Nom_hotel]</p>
+                        <p>Countery <span>$row[Pays]</span> </p>
+                        <p>City <span>$row[Ville]</span> </p>
+                        <a>Show more</a>
+                    </div>
+                </div>
+                        
+                        ";
+                    }
+                } else {
+                    echo "0 results";
+                }
+
+                mysqli_close($con);
+                ?>
+
+
+                <!-- <div class="cart">
                     <div class="imageHotel">
                         <img src="./imag/hero.jpg" alt="image">
                     </div>
@@ -409,91 +503,7 @@ include("./Config/cnx.php");
                         <p>Prix ce soir <span> 100$ </span> </p>
                         <a>Show more</a>
                     </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
-                <div class="cart">
-                    <div class="imageHotel">
-                        <img src="./imag/hero.jpg" alt="image">
-                    </div>
-                    <div class="info">
-                        <p class='name'>name Hotel</p>
-                        <p>Countery <span>Maroc</span> </p>
-                        <p>City <span>Casa Blanca </span> </p>
-                        <p>Prix ce soir <span> 100$ </span> </p>
-                        <a>Show more</a>
-                    </div>
-                </div>
+                </div> -->
             </div>
             <div class="mini_her">
                 <h3>Notre Chambre</h3>
