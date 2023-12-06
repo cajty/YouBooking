@@ -19,42 +19,7 @@ $_SESSION["vill"] = null;
         font-family: Arial, Helvetica, sans-serif;
     }
 
-    .header {
 
-        height: 10vh;
-        color: #000;
-    }
-
-
-    .header a {
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    .header .contenr .logo a {
-        font-size: 36px;
-        font-weight: bold;
-        color: #b47f2f;
-    }
-
-    .header .contenr ul li a {
-        font-size: 22px;
-        font-weight: 500;
-        transition: 1s;
-    }
-
-    .header .contenr ul li a:hover {
-        color: #b47f2f;
-    }
-
-    .header .contenr ul li:first-child {
-        color: #b47f2f;
-    }
-
-    @media (max-width: 768px) {
-        .header .contenr ul {
-            display: none;
-        }
-    }
 
     .hero_section {
         background-image: url(./imag/hotel.jpg);
@@ -182,46 +147,7 @@ $_SESSION["vill"] = null;
         transform: scale(1.6) rotate(3deg);
     }
 
-    main .mini_hero {
-        height: 20vh;
-        background-color: rgb(245, 245, 245);
-        display: flex;
-        flex-direction: column;
-        justify-content: space-evenly;
-        align-items: center;
-    }
 
-    main .mini_her {
-        height: 10vh;
-        background-color: rgb(245, 245, 245);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-bottom: 20px;
-        border-radius: 5px;
-    }
-
-    main .mini_hero h3,
-    main .mini_her h3 {
-        color: #b47f2f;
-        font-weight: bold;
-        font-size: 26px;
-    }
-
-    main .mini_hero p {
-        color: #000;
-        font-size: 26px;
-        font-weight: bold;
-        letter-spacing: 1px;
-        font-family: Arial, Helvetica, sans-serif;
-    }
-
-    @media (max-width: 768px) {
-        main .mini_hero p {
-            font-size: 18px;
-            text-align: center;
-        }
-    }
 
     main .contenr .hotels {
         padding: 40px 0;
@@ -292,13 +218,36 @@ $_SESSION["vill"] = null;
         font-size: 18px;
     }
 
-    main .contenr .chomber {
-        padding: 40px 0;
-        width: 100%;
-        height: auto;
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 30px;
+    main .mini_hero {
+        height: 20vh;
+
+        background-color: rgb(245, 245, 245);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+    }
+
+    main .mini_hero p {
+        color: #000;
+        font-size: 26px;
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    @media (max-width: 768px) {
+        main .mini_hero p {
+            font-size: 18px;
+            text-align: center;
+        }
+    }
+
+    main .mini_hero h3 {
+        color: #b47f2f;
+        font-weight: bold;
+        font-size: 26px;
     }
 
     .filter {
@@ -336,66 +285,29 @@ $_SESSION["vill"] = null;
         border-radius: 8px;
     }
 
-    /* #bi{
-        display: none;
-    } */
-    footer {
-        background-color: #b47f2f;
-        color: #fff;
-        display: flex;
-    }
+
+
 
     .fltres {
-        /* display: none; */
         background-color: rgb(245, 245, 245);
         padding: 30px 0;
         border-radius: 8px;
         margin-bottom: 10px;
     }
-    #fltres{
+
+    #fltres {
         display: none;
     }
-    #vill{
+
+    #vill {
         display: none;
     }
 </style>
 
 <body>
-    <header class="header">
-        <div class="contenr">
-            <div class="logo">
-                <?php?>
-                <a href="index.php">YouBooking</a>
-                
-            </div>
-            <ul>
-                
-                <?php   if(isset($_SESSION["typeUser_id"])){
-                    echo"
-                    <li> <a href='#'> home </a> </li>
-                    <li style ='color:white; background-color:black; border-radius:10px;'> <a href='./logout.php'>Logout</a> </li>
-                ";
-                  
-                $sess=$_SESSION['ID'];
-                $requete="SELECT Prenom FROM utilisateurs WHERE id = $sess";
-                $query = mysqli_query($con, $requete);
-                $rows = mysqli_fetch_assoc($query);
-                $fullname = $rows["Prenom"];
-                
-                echo"
-                    
-                    <h4>Welcome Back $fullname</h4>
-                ";
-                }else{
-                    echo "
-                    <li> <a href='./register.php'> register</a> </li>
-                <li> <a href='./login.php'> log in </a></li>
-                ";
-                }
-                ?>
-            </ul>
-        </div>
-    </header>
+    <?php
+    require("./includes/header.php");
+    ?>
     <section class="hero_section">
         <div class="contenr">
             <p>Bienvenue sur YouBoking ! Découvrez un monde de réservations avec facilité et confort. Alors, commencez
@@ -472,7 +384,6 @@ $_SESSION["vill"] = null;
                     }
 
                     if (isset($_POST["vill"])) {
-                        echo $_POST["vill"];
                         $_SESSION["vill"] = $_POST["vill"];
                     }
 
@@ -484,6 +395,7 @@ $_SESSION["vill"] = null;
 
 
             <div class="hotels">
+
                 <?php
                 $er = $_SESSION["pays"];
                 $vil = $_SESSION["vill"];
@@ -492,7 +404,7 @@ $_SESSION["vill"] = null;
                 INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id WHERE localisation_hotels.Pays =  '$er'";
                     $result = mysqli_query($con, $sql);
                     if (mysqli_num_rows($result) > 0) {
-                        
+
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "
                         <div class='cart'>
@@ -503,7 +415,7 @@ $_SESSION["vill"] = null;
                         <p class='name'>$row[Nom_hotel]</p>
                         <p>Countery <span>$row[Pays]</span> </p>
                         <p>City <span>$row[Ville]</span> </p>
-                        <a>Show more</a>
+                        <a href='./detalise.php?id=$row[ID]' name='bilal'>Show more</a>
                     </div>
                 </div>
                         
@@ -517,9 +429,9 @@ $_SESSION["vill"] = null;
                     $sql = "SELECT * FROM localisation_hotels
                     INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id WHERE localisation_hotels.Ville =  '$vil'";
                     $result = mysqli_query($con, $sql);
-                    
+
                     if (mysqli_num_rows($result) > 0) {
-                       
+
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "
                             <div class='cart'>
@@ -527,10 +439,11 @@ $_SESSION["vill"] = null;
                             <img src='./imag/hero.jpg' alt='image'>
                         </div>
                         <div class='info'>
+                        
                             <p class='name'>$row[Nom_hotel]</p>
                             <p>Countery <span>$row[Pays]</span> </p>
                             <p>City <span>$row[Ville]</span> </p>
-                            <a>Show more</a>
+                            <a href='./detalise.php?id=$row[ID]' name='bilal'>Show more</a>
                         </div>
                     </div>
                             
@@ -542,9 +455,10 @@ $_SESSION["vill"] = null;
                     $sql = "SELECT * FROM localisation_hotels
                 INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id";
                     $result = mysqli_query($con, $sql);
+
                     
                     if (mysqli_num_rows($result) > 0) {
-                        
+
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "
                         <div class='cart'>
@@ -555,7 +469,7 @@ $_SESSION["vill"] = null;
                         <p class='name'>$row[Nom_hotel]</p>
                         <p>Countery <span>$row[Pays]</span> </p>
                         <p>City <span>$row[Ville]</span> </p>
-                        <a>Show more</a>
+                        <a href='./detalise.php?id=$row[ID]' name='bilal'>Show more</a>
                     </div>
                 </div>
                         
@@ -570,49 +484,14 @@ $_SESSION["vill"] = null;
 
                 ?>
             </div>
-            <div class="mini_her">
-                <h3>Notre Chambre</h3>
-            </div>
-            <div class="chomber">
-                <div class="imag_chomber">
-                    <img src="./imag/room4.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room-4.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room-2.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room-3.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room6.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room5.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room6.jpg">
-                </div>
-                <div class="imag_chomber">
-                    <img src="./imag/room5.jpg">
-                </div>
-
-            </div>
+            <?php
+            require("./includes/noterChompre.php");
+            ?>
         </div>
     </main>
-    <footer>
-        <div class="contenr">
-            <p>&copy; 2023 YouBoking All rights reserved.</p>
-            <div class="social-icons">
-                <a href="#" target="_blank">Facebook</a>
-                <a href="#" target="_blank">Twitter</a>
-                <a href="#" target="_blank">Instagram</a>
-                <!-- Add more social icons as needed -->
-            </div>
-        </div>
-    </footer>
+    <?php
+    require("./includes/footer.php");
+    ?>
 
     <script>
         let pays = document.getElementById("fltres");
@@ -621,12 +500,12 @@ $_SESSION["vill"] = null;
         let btn = document.querySelectorAll(".filter .btn");
         console.log(pays);
         console.log(vill);
-            btn[0].addEventListener("click" , ()=>{
-                fltres.style.display = "flex"
-            })
-        btn[1].addEventListener("click" , ()=>{
-                vill.style.display = "flex"
-            })
+        btn[0].addEventListener("click", () => {
+            fltres.style.display = "flex"
+        })
+        btn[1].addEventListener("click", () => {
+            vill.style.display = "flex"
+        })
 
         pays.addEventListener("click", () => {
             fltres.style.display = "flex"
