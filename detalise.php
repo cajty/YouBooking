@@ -15,7 +15,15 @@
         main .contenr .touts {
             display: flex;
             gap: 40px;
+            flex-wrap: wrap;
         }
+        @media (max-width: 900px) {
+            main .contenr .touts {
+            display: flex;
+            flex-wrap: wrap;
+        }
+    }
+
 
         main .contenr .touts .info {
             width: 300px;
@@ -28,12 +36,12 @@
 
         }
 
-        main .contenr .touts .info {
+        main .contenr .touts .detalisHotels .info {
             padding: 10px;
             line-height: 2;
         }
 
-        main .contenr .touts .info p {
+        main .contenr .touts .detalisHotels .info p {
             display: flex;
             width: 100%;
             justify-content: space-between;
@@ -41,20 +49,48 @@
             font-weight: 600;
         }
 
-        main .contenr .touts .info span {
+        main .contenr .touts .detalisHotels .info span {
             width: 60%;
         }
 
-        main .contenr .touts .info .name {
+        main .contenr .touts .detalisHotels .info .name {
             width: 100%;
             font-weight: 500;
             font-size: 22px;
         }
 
-        main .contenr .touts .info .name,
-        main .contenr .touts .info span {
+        main .contenr .touts .detalisHotels .info .name,
+        main .contenr .touts .detalisHotels .info span {
             color: #b47f2f;
             font-weight: bold;
+        }
+
+        .detalisHotels {
+            height: auto;
+
+        }
+        main .contenr .touts .cart{
+            min-width: 200px;
+            display: flex;
+            flex-direction: column;
+        }
+        .infos p{
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .infos p span{
+            font-size: 22px;
+            color: #b47f2f; 
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        .infos a{
+            background-color: #b47f2f; 
+            color: #fff;
+            padding: 5px 20px;
+            font-weight: bold;
+            font-size: 18px;
         }
     </style>
 </head>
@@ -67,42 +103,62 @@
     <main>
         <div class='contenr'>
             <div class='touts'>
+            <?php
+            include("./Config/cnx.php");
+            $v = isset($_GET['id']) ? $_GET['id'] : null;
+                
+                    $sql = "SELECT * FROM localisation_hotels
+                    INNER JOIN hotels ON hotels.ID = localisation_hotels.hotel_id  WHERE hotels.ID = $v";
+                    $result = mysqli_query($con, $sql);
 
-                <?php
-                include("./Config/cnx.php");
-                $v = isset($_GET['id']) ? $_GET['id'] : null;
+
+                    if (mysqli_num_rows($result) > 0) {
+
+                    while ($row = mysqli_fetch_assoc($result)) {
+                    echo "
+                    <div class='detalisHotels'>
+                        <div class='imageHotel'>
+                            <img src='./imag/hero.jpg' alt='image'>
+                        </div>
+                        <div class='info'>
+                            <p class='name'>$row[Nom_hotel]</p>
+                            <p>Countery <span>$row[Pays]</span> </p>
+                            <p>City <span>$row[Ville]</span> </p>
+                            <p>Email <span>$row[Email]</span> </p>
+                            <p>Phone <span>$row[Phone]</span> </p>
+                            <p>description <span>$row[Description]</span> </p>
+                        </div>
+                    </div>
+
+                    ";
+                    }
+                    } else {
+                    echo "0 results";
+                    }
+                
+
+               
+                
+               
                 if ($v !== null) {
-                    $sql = "SELECT * FROM chambres
+                    $sql = "SELECT  chambres.Description  ,  chambres.Prix , chambres.Disponibilite , chambres.ID ,chambres.Type_chambre FROM chambres
                     INNER JOIN hotels ON hotels.ID = chambres.hotel_id WHERE hotels.ID = $v ";
                     $result = mysqli_query($con, $sql);
 
 
-                    $row = mysqli_fetch_assoc($result);
-                    print_r($row);
-                    echo "
-                    <div class='cart'>
-                <div class='imageHotel'>
-                    <img src='./imag/hero.jpg' alt='image'>
-                </div>
-                <div class='info'>
-                    <p class='name'>$row[ID]</p>
-                    <p class='name'>$row[Nom_hotel]</p>
-                </div>
-            </div>
-                    
-                    ";
+                    // $row = mysqli_fetch_assoc($result);
+                    // print_r($row);
+                
 
                     if (mysqli_num_rows($result) > 0) {
-
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "
                         <div class='cart'>
-                    <div class='imageHotel'>
-                        <img src='./imag/hero.jpg' alt='image'>
-                    </div>
-                    <div class='info'>
-                        <p class='name'>$row[ID]</p>
-                        <p class='name'>$row[Nom_hotel]</p>
+                    <div class='infos'>
+                        <p class='name'>type : <span>  $row[Type_chambre] </span></p>
+                        <p class='name'>Prix : <span> $row[Prix] </span></p>
+                        <p class='name'>Description : <span> $row[Description] <span></p>
+                        <a href='./detalise.php?id=$row[ID]' >reserve</a>
                     </div>
                 </div>
                         
