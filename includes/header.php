@@ -44,7 +44,7 @@
         </div>
         <ul>
             <li> <a href="#"> home </a> </li>
-            <li> <a href="./register.php"> register</a> </li>
+            <li> <a href="./register.php"> register</a></li>
             <li> <a href="./login.php"> log in </a></li>
         </ul>
     </div>
