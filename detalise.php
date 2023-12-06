@@ -158,7 +158,7 @@
                         <p class='name'>type : <span>  $row[Type_chambre] </span></p>
                         <p class='name'>Prix : <span> $row[Prix] </span></p>
                         <p class='name'>Description : <span> $row[Description] <span></p>
-                        <a href='./detalise.php?id=$row[ID]' >reserve</a>
+                        <a href='./chambre.php?id=$row[ID]' >reserve</a>
                     </div>
                 </div>
                         
