@@ -12,6 +12,7 @@ $_SESSION["vill"] = null;
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>youhotel</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.cs">
 </head>
 <style>
     * {
@@ -363,12 +364,35 @@ $_SESSION["vill"] = null;
     <header class="header">
         <div class="contenr">
             <div class="logo">
+                <?php?>
                 <a href="index.php">YouBooking</a>
+                
             </div>
             <ul>
-                <li> <a href="#"> home </a> </li>
-                <li> <a href="./register.php"> register</a> </li>
-                <li> <a href="./login.php"> log in </a></li>
+                
+                <?php   if(isset($_SESSION["typeUser_id"])){
+                    echo"
+                    <li> <a href='#'> home </a> </li>
+                    <li style ='color:white; background-color:black; border-radius:10px;'> <a href='./logout.php'>Logout</a> </li>
+                ";
+                  
+                $sess=$_SESSION['ID'];
+                $requete="SELECT Prenom FROM utilisateurs WHERE id = $sess";
+                $query = mysqli_query($con, $requete);
+                $rows = mysqli_fetch_assoc($query);
+                $fullname = $rows["Prenom"];
+                
+                echo"
+                    
+                    <h4>Welcome Back $fullname</h4>
+                ";
+                }else{
+                    echo "
+                    <li> <a href='./register.php'> register</a> </li>
+                <li> <a href='./login.php'> log in </a></li>
+                ";
+                }
+                ?>
             </ul>
         </div>
     </header>
@@ -608,6 +632,8 @@ $_SESSION["vill"] = null;
             fltres.style.display = "flex"
         })
     </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

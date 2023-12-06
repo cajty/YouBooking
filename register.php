@@ -53,6 +53,7 @@
             <button name="register" type="submit" class="btn btn-primary btn-block">Create Account</button>
             <div class="mt-3 text-center">
               <p>Already have an account? <a href="login.php" class="text-primary">Sign In</a></p>
+              <p>Go to Home <a href="index.php" class="text-primary">Home</a></p>
             </div>
           </form>
         </div>

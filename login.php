@@ -133,6 +133,7 @@
               <button name="login" type="submit" class="btn text-white btn-block mt-3 my-button" >Login to your account</button>
               <div class="mt-3">
                 <p>Not registered yet? <a href="register.php" class="text-primary">Create account</a></p>
+                <p>return <a href="index.php" class="text-primary">Home</a></p>
               </div>
             </form>
           </div>

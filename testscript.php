@@ -35,7 +35,7 @@ function registerUser()
         if ($result) {
             $varimage = move_uploaded_file($image_tmp, $path_image);
             echo "Inscription réussie";
-            header("./index.php");
+            header("location:./login.php");
         } else {
             echo "Erreur lors de l'inscription";
         }

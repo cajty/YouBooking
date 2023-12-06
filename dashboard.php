@@ -1,9 +1,8 @@
 <?php
 session_start();
 if ($_SESSION["typeUser_id"] === 'admin' || $_SESSION["typeUser_id"] === 'proprietaire de hotel') {
-    
 } else {
-    header('location: ./login.php');
+    header('location:./pageNotfound.php');
     exit(); 
 }
 ?>
